@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}view rss{% endblock %}
+
+{% block body %}
+
+  <div class="container text-center mt-5">
+    <div class="row justify-content-center">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            {{rmRss.title}} ({{rmRss.pubDate}})
+          </div>
+          <div class="card-body">
+            <a style="display:none;" id="rss-content-link" class="btn btn-info" href="{{rmRss.contentLink}}">View Story On Original Site</a>
+            <p id="rss-content">{{rmRss.content}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+  {{parent()}}
+  <script>
+
+    document.addEventListener("click", function(event) {
+      const content = document.getElementById('rss-content');
+      const contentButton = document.getElementById('rss-content-link');
+      const target = event.target; 
+
+      if(content !== target) {
+        contentButton.style.display = 'none';
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      const contentButton = document.getElementById('rss-content-link');
+
+      //can also check alt key with event.keyCode = 18;
+        if(event.altKey) {
+          contentButton.style.display = 'block';
+        }
+    });
+  </script>
+
+{% endblock %}
